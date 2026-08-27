@@ -30,5 +30,6 @@ typedef struct {
 } thread_handler_threadpool;
 
 thread_handler_status init_thread_handler(thread_handler_threadpool *pool);
+thread_handler_status start_thread(thread_handler_threadpool *pool);
 
 #endif // !THEAD_HANDLER_H
