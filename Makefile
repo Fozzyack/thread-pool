@@ -1,6 +1,6 @@
 
 CC = gcc
-CFLAGS = -std=gnu17 -Wall -Wextra -Werror -Wpedantic -pthread
+CFLAGS = -std=gnu17 -Wall -Wextra -Werror -Wpedantic -pthread -Iinclude
 
 TARGET = bin/thread-pool
 SRC = $(wildcard src/*.c)

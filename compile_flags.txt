@@ -4,3 +4,4 @@
 -Werror
 -Wpedantic
 -pthread
+-Iinclude
