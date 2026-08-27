@@ -1,5 +1,3 @@
-
-
 #include "thread_handler.h"
 #include <pthread.h>
 #include <stdio.h>
