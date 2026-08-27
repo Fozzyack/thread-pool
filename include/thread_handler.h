@@ -7,8 +7,8 @@
 #define QUEUE_SIZE 100
 
 typedef enum {
-  THEAD_HANDLER_OK,
-  THEAD_HANDLER_ERROR,
+  THREAD_HANDLER_OK,
+  THREAD_HANDLER_ERROR,
 } thread_handler_status;
 
 typedef struct {
