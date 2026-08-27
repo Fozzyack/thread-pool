@@ -11,6 +11,7 @@ void *thread_function(void *args) {
     return NULL;
 }
 
+// starts threads
 thread_handler_status start_thread(thread_handler_threadpool *pool) {
     int status;
     for (int i = 0; i < THREAD_COUNT; i++) {
@@ -28,6 +29,7 @@ thread_handler_status start_thread(thread_handler_threadpool *pool) {
     return THREAD_HANDLER_OK;
 }
 
+// Initialises thread pool
 thread_handler_status init_thread_handler(thread_handler_threadpool *pool) {
 
     // init queue
