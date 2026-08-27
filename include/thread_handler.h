@@ -7,26 +7,28 @@
 #define QUEUE_SIZE 100
 
 typedef enum {
-  THREAD_HANDLER_OK,
-  THREAD_HANDLER_ERROR,
+    THREAD_HANDLER_OK,
+    THREAD_HANDLER_ERROR,
 } thread_handler_status;
 
 typedef struct {
-  void (*fn)(void *arg);
-  void *arg;
+    void (*fn)(void *arg);
+    void *arg;
 } thread_handler_task;
 
 typedef struct {
 
-  pthread_mutex_t lock;
-  pthread_t threads[THREAD_COUNT];
-  pthread_cond_t condition;
+    pthread_mutex_t lock;
+    pthread_t threads[THREAD_COUNT];
+    pthread_cond_t condition;
 
-  thread_handler_task task_queue[QUEUE_SIZE];
-  int queue_count;
-  int queue_front;
-  int queue_back;
+    thread_handler_task task_queue[QUEUE_SIZE];
+    int queue_count;
+    int queue_front;
+    int queue_back;
 
 } thread_handler_threadpool;
+
+thread_handler_status init_thread_handler(thread_handler_threadpool *pool);
 
 #endif // !THEAD_HANDLER_H
