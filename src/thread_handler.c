@@ -1,13 +1,6 @@
 
 
 #include "thread_handler.h"
+#include <pthread.h>
 
-#define THREAD_COUNT 10
-#define QUEUE_SIZE 100
-
-typedef struct {
-  void (*fn)(void *arg);
-  void *arg;
-} thread_handler_task;
-
-void init_thread_handler(void) {}
+thread_handler_status init_thread_handler(thread_handler_threadpool *pool) {}
