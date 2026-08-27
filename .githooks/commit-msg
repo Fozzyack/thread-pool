@@ -1,0 +1,20 @@
+#!/bin/sh
+
+branch=$(git branch --show-current)
+[ -n "$branch" ] || branch="detached"
+
+prefix="[$branch] "
+first_line=$(sed -n '1p' "$1")
+
+# Prevent duplicate prefixes during amend
+case "$first_line" in
+    "$prefix"*) exit 0 ;;
+esac
+
+tmp=$(mktemp)
+awk -v prefix="$prefix" '
+    NR == 1 { print prefix $0; next }
+    { print }
+' "$1" > "$tmp"
+
+mv "$tmp" "$1"

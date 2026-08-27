@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v clang-format >/dev/null 2>&1; then
+    printf '%s\n' "Error: clang-format is not installed." >&2
+    exit 1
+fi
+
+mapfile -d '' -t files < <(
+    git diff --cached \
+        --name-only \
+        --diff-filter=ACM \
+        -z \
+        -- '*.c' '*.h'
+)
+
+for file in "${files[@]}"; do
+    printf 'Formatting %s\n' "$file"
+    clang-format -i "$file"
+
+    # Include the formatted version in the commit.
+    git add -- "$file"
+done
+
