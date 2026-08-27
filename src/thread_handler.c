@@ -10,5 +10,5 @@ thread_handler_status init_thread_handler(thread_handler_threadpool *pool) {
   pool->queue_front = 0;
   pool->queue_back = 0;
 
-  pthread_mutex_init(pool->lock, NULL);
+  pthread_mutex_init(&(pool->lock), NULL);
 }
