@@ -4,8 +4,13 @@
 #include <string.h>
 
 void *thread_function(void *args) {
-    (void)args;
-    printf("Running thread\n");
+    thread_handler_threadpool *pool = (thread_handler_threadpool *)args;
+
+    while (1) {
+        pthread_mutex_lock(&(pool->lock));
+        pthread_mutex_unlock(&(pool->lock));
+    }
+
     return NULL;
 }
 
@@ -29,6 +34,9 @@ thread_handler_status start_thread(thread_handler_threadpool *pool) {
 
 // Initialises thread pool
 thread_handler_status init_thread_handler(thread_handler_threadpool *pool) {
+
+    // init stop condition
+    pool->stop = 0;
 
     // init queue
     pool->queue_count = 0;
