@@ -11,9 +11,15 @@ int main(void) {
         fprintf(stderr, "Error: init_thread_handler\n");
         return EXIT_FAILURE;
     }
-    status = start_thread(&thread_pool);
+    status = start_thread_pool(&thread_pool);
     if (status == THREAD_HANDLER_ERROR) {
         fprintf(stderr, "Error: start_thread\n");
+        return EXIT_FAILURE;
+    }
+
+    status = stop_thread_pool(&thread_pool);
+    if (status == THREAD_HANDLER_ERROR) {
+        fprintf(stderr, "Error: stop_thread_pool\n");
         return EXIT_FAILURE;
     }
 

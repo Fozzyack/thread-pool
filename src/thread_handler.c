@@ -31,7 +31,7 @@ void *thread_function(void *args) {
 }
 
 // starts threads
-thread_handler_status start_thread(thread_handler_threadpool *pool) {
+thread_handler_status start_thread_pool(thread_handler_threadpool *pool) {
     int status;
     for (int i = 0; i < THREAD_COUNT; i++) {
         if ((status = pthread_create(&(pool->threads[i]), NULL, thread_function, pool)) != 0) {
@@ -39,12 +39,26 @@ thread_handler_status start_thread(thread_handler_threadpool *pool) {
             return THREAD_HANDLER_ERROR;
         }
     }
+    return THREAD_HANDLER_OK;
+}
+
+thread_handler_status stop_thread_pool(thread_handler_threadpool *pool) {
+
+    pthread_mutex_lock(&(pool->lock));
+    pool->stop = 1;
+    pthread_cond_broadcast(&(pool->condition));
+    pthread_mutex_unlock(&(pool->lock));
+
+    int status;
     for (int i = 0; i < THREAD_COUNT; i++) {
         if ((status = pthread_join(pool->threads[i], NULL)) != 0) {
             fprintf(stderr, "Error: pthread_join - status: %d err:%s\n", status, strerror(status));
             return THREAD_HANDLER_ERROR;
         }
     }
+    pthread_mutex_destroy(&(pool->lock));
+    pthread_cond_destroy(&(pool->condition));
+
     return THREAD_HANDLER_OK;
 }
 
