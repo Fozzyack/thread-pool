@@ -30,6 +30,21 @@ void *thread_function(void *args) {
     return NULL;
 }
 
+thread_handler_status enque_task(thread_handler_threadpool *pool, void (*fn)(void *), void *args) {
+    pthread_mutex_lock(&(pool->lock));
+    int free_position = (pool->queue_back + 1) % QUEUE_SIZE;
+    if (pool->queue_count < QUEUE_SIZE) {
+        pool->task_queue[pool->queue_back].fn = fn;
+        pool->task_queue[pool->queue_back].arg = args;
+        pool->queue_back = free_position;
+        pthread_cond_signal(&(pool->condition));
+    } else {
+        fprintf(stderr, "Task queue is full: Unable to accept new tasks\n");
+    }
+
+    return THREAD_HANDLER_OK;
+}
+
 // starts threads
 thread_handler_status start_thread_pool(thread_handler_threadpool *pool) {
     int status;
