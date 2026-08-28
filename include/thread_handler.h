@@ -34,6 +34,6 @@ typedef struct {
 thread_handler_status init_thread_handler(thread_handler_threadpool *pool);
 thread_handler_status start_thread_pool(thread_handler_threadpool *pool);
 thread_handler_status stop_thread_pool(thread_handler_threadpool *pool);
-thread_handler_status enque_task(thread_handler_threadpool *pool, void (*fn)(void *), void *args);
+thread_handler_status enque_threadpool_task(thread_handler_threadpool *pool, void (*fn)(void *), void *args);
 
 #endif // !THEAD_HANDLER_H
