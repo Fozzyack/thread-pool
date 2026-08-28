@@ -36,6 +36,7 @@ thread_handler_status enque_task(thread_handler_threadpool *pool, void (*fn)(voi
     if (pool->queue_count < QUEUE_SIZE) {
         pool->task_queue[pool->queue_back].fn = fn;
         pool->task_queue[pool->queue_back].arg = args;
+        pool->queue_count++;
         pool->queue_back = free_position;
         pthread_cond_signal(&(pool->condition));
     } else {
