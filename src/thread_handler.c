@@ -8,7 +8,23 @@ void *thread_function(void *args) {
 
     while (1) {
         pthread_mutex_lock(&(pool->lock));
+
+        // while stop is set -> halt the thread
+        while (pool->queue_count == 0 && !pool->stop) {
+            pthread_cond_wait(&(pool->condition), &(pool->lock));
+        }
+
+        if (pool->stop) {
+            pthread_mutex_unlock(&(pool->lock));
+            pthread_exit(NULL);
+        }
+
+        thread_handler_task task = pool->task_queue[pool->queue_front];
+        pool->queue_front = (pool->queue_front + 1) % QUEUE_SIZE;
+        pool->queue_count--;
+
         pthread_mutex_unlock(&(pool->lock));
+        (*(task.fn))(task.arg);
     }
 
     return NULL;
