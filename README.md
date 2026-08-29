@@ -1,4 +1,4 @@
-# Thread Pool (Work in Progress)
+# Thread Pool
 
 An early-stage thread-pool implementation in C using POSIX threads. This is a
 learning project and is not finished yet.
